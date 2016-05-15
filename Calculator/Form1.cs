@@ -80,68 +80,60 @@ namespace Calculator
         double total1 = 0;
         double total2 = 0;
 
-        bool plusButtonClicked = false;
-        bool minusButtonClicked = false;
-        bool multipyButtonClicked = false;
-        bool divideButtonclicked = false;
+        string theOperator;
 
         private void buttonPlus_Click(object sender, EventArgs e)
         {
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
-            plusButtonClicked = true;
-            minusButtonClicked = false;
-            multipyButtonClicked = false;
-            divideButtonclicked = false;
+            theOperator = "+";
         }
 
         private void buttonMinus_Click(object sender, EventArgs e)
         {
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
-            plusButtonClicked = false;
-            minusButtonClicked = true;
-            multipyButtonClicked = false;
-            divideButtonclicked = false;
+            theOperator = "-";
         }
 
         private void buttonMultiply_Click(object sender, EventArgs e)
         {
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
-            plusButtonClicked = false;
-            minusButtonClicked = false;
-            multipyButtonClicked = true;
-            divideButtonclicked = false;
+            theOperator = "*";
         }
 
         private void buttonDivide_Click(object sender, EventArgs e)
         {
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
-            plusButtonClicked = false;
-            minusButtonClicked = false;
-            multipyButtonClicked = false;
-            divideButtonclicked = true;
+            theOperator = "/";
         }
 
         private void buttonEquals_Click(object sender, EventArgs e)
         {
-            if (plusButtonClicked == true)
+            switch (theOperator)
             {
-                total2 = total1 + double.Parse(txtDisplay.Text);
-            }
-            else if (minusButtonClicked == true)
-            {
-                total2 = total1 - double.Parse(txtDisplay.Text);
-            }
-            else if (multipyButtonClicked == true)
-            {
-                total2 = total1 * double.Parse(txtDisplay.Text);
-            }
-            else if (divideButtonclicked == true)
-            {
-                total2 = total1 / double.Parse(txtDisplay.Text);
+                case "+":
+                    total2 = total1 + double.Parse(txtDisplay.Text);
+                    break;
+
+                case "-":
+                    total2 = total1 - double.Parse(txtDisplay.Text);
+                    break;
+
+                case "*":
+                    total2 = total1 * double.Parse(txtDisplay.Text);
+                    break;
+
+                case "/":
+                    total2 = total1 / double.Parse(txtDisplay.Text);
+                    break;
+
+                default:
+                    total2 = 0;
+                    break;
+
             }
 
             txtDisplay.Text = total2.ToString();
