@@ -79,14 +79,19 @@ namespace Calculator
 
         double total1 = 0;
         double total2 = 0;
+        int counter = 0;
 
         string theOperator;
 
+        //Cast the string entered for the operation to a double (for possible decimal points)
+        //Set the operator sign for the switch statement to use
+        //Increase the counter by one so the number of that particular operation can be displayed in textBox1
         private void buttonPlus_Click(object sender, EventArgs e)
         {
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
             theOperator = "+";
+            counter += 1;
         }
 
         private void buttonMinus_Click(object sender, EventArgs e)
@@ -94,6 +99,7 @@ namespace Calculator
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
             theOperator = "-";
+            counter += 1;
         }
 
         private void buttonMultiply_Click(object sender, EventArgs e)
@@ -101,6 +107,7 @@ namespace Calculator
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
             theOperator = "*";
+            counter += 1;
         }
 
         private void buttonDivide_Click(object sender, EventArgs e)
@@ -108,6 +115,7 @@ namespace Calculator
             total1 = total1 + double.Parse(txtDisplay.Text);
             txtDisplay.Clear();
             theOperator = "/";
+            counter += 1;
         }
 
         private void buttonEquals_Click(object sender, EventArgs e)
@@ -137,7 +145,82 @@ namespace Calculator
             }
 
             txtDisplay.Text = total2.ToString();
+            textBox1.Text += ("The answer to problem #" + counter + " is " + total2.ToString() + Environment.NewLine);
+            //Reset value of total1 so it will be ready to recieve the next number
             total1 = 0;
+        }
+
+        private void menuQuit_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Really Quit?", "Exit", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void menuCut_Click(object sender, EventArgs e)
+        {
+            //Check to see if a selection of text has been highlighted and cut it if there is.
+            if (textBox1.SelectedText != "")
+            {
+                textBox1.Cut();
+            }
+        }
+
+        private void menuUndo_Click(object sender, EventArgs e)
+        {
+            textBox1.Undo();
+        }
+
+        private void menuCopy_Click(object sender, EventArgs e)
+        {
+            //Check to see if anything has been highlighted and copy it if there is.
+            if (textBox1.SelectionLength > 0)
+            {
+                textBox1.Copy();
+            }
+        }
+
+        private void menuPaste_Click(object sender, EventArgs e)
+        {
+            //If there is Text on the clipboard the paste it.  If it isn't text don't paste.
+            if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text) == true)
+            {
+                textBox2.Paste();
+                Clipboard.Clear();
+            }
+        }
+
+        private void menuViewTextBoxes_Click(object sender, EventArgs e)
+        {
+            //This lines toggles the check next to View Text Boxes in menu
+            menuViewTextBoxes.Checked = !menuViewTextBoxes.Checked;
+            if(menuViewTextBoxes.Checked)
+            {
+                textBox1.Visible = true;
+                textBox2.Visible = true;
+            }
+            else
+            {
+                textBox1.Visible = false;
+                textBox2.Visible = false;
+            }
+        }
+
+        private void menuViewLabels_Click(object sender, EventArgs e)
+        {
+            //This line toggles the check next to View Labels in menu
+            menuViewLabels.Checked = !menuViewLabels.Checked;
+            if(menuViewLabels.Checked)
+            {
+                label1.Visible = true;
+                label2.Visible = true;
+            }
+            else
+            {
+                label1.Visible = false;
+                label2.Visible = false;
+            }
         }
     }
 }
